@@ -6,27 +6,32 @@
 // Three.js相关变量已删除
 
 // ========================================
-// 初始化
+// 初始化函数
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
-    // 初始化AOS动画
+    // 初始化AOS（动画库）
     AOS.init({
         duration: 1000,
         once: true,
         offset: 100
     });
     
-    // 初始化所有功能（移除Three.js相关）
+    // 初始化导航
     initNavigation();
+    // 初始化滚动动画
     initScrollEffects();
+    // 初始化数字统计
     initCounters();
+    // 初始化技能条
     initSkillBars();
+    // 初始化项目轮播
     initProjectsCarousel();
-    init3DCardEffect(); // 添加3D卡片效果
+    // 初始化3D卡片特效
+    init3DCardEffect(); // 添加3D卡片特效
 });
 
 // ========================================
-// 3D卡片倾斜效果
+// 3D卡片特效
 // ========================================
 function init3DCardEffect() {
     const cards = document.querySelectorAll('.liquid-glass');
@@ -44,8 +49,8 @@ function init3DCardEffect() {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
             
-            const rotateX = ((y - centerY) / centerY) * 10; // 垂直旋转，幅度±10度
-            const rotateY = ((x - centerX) / centerX) * -10; // 水平旋转，幅度±10度
+            const rotateX = ((y - centerY) / centerY) * 10; // X轴旋转角度
+            const rotateY = ((x - centerX) / centerX) * -10; // Y轴旋转角度
             
             this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
         });
@@ -58,7 +63,7 @@ function init3DCardEffect() {
 }
 
 // ========================================
-// 导航栏功能
+// 导航控制
 // ========================================
 function initNavigation() {
     const navbar = document.getElementById('navbar');
@@ -75,24 +80,24 @@ function initNavigation() {
         }
     });
     
-    // 移动端菜单切换
+    // 菜单切换按钮
     menuToggle.addEventListener('click', () => {
         menuToggle.classList.toggle('active');
         navLinks.classList.toggle('active');
     });
     
-    // 点击导航链接
+    // 点击导航链接平滑滚动到相应部分
     navLinkItems.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // 移除所有active类
+            // 移除其他链接的激活状态
             navLinkItems.forEach(l => l.classList.remove('active'));
             
-            // 添加active类到当前链接
+            // 给当前链接添加激活状态
             this.classList.add('active');
             
-            // 平滑滚动到目标
+            // 平滑滚动到目标部分
             const targetId = this.getAttribute('href');
             const targetSection = document.querySelector(targetId);
             
@@ -103,13 +108,13 @@ function initNavigation() {
                 });
             }
             
-            // 关闭移动端菜单
+            // 关闭移动设备菜单
             menuToggle.classList.remove('active');
             navLinks.classList.remove('active');
         });
     });
     
-    // 滚动时更新导航高亮
+    // 滚动时更新导航链接的激活状态
     window.addEventListener('scroll', () => {
         let current = '';
         const sections = document.querySelectorAll('.section, .hero-section');
@@ -133,14 +138,14 @@ function initNavigation() {
 }
 
 // ========================================
-// 滚动特效
+// 滚动动画
 // ========================================
 function initScrollEffects() {
-    // 监听滚动，添加视差效果
+    // 监听页面滚动事件
     window.addEventListener('scroll', () => {
         const scrolled = window.scrollY;
         
-        // 导航栏模糊效果
+        // 背景模糊效果
         const navbar = document.getElementById('navbar');
         const blur = Math.min(scrolled / 10, 20);
         navbar.style.backdropFilter = `blur(${blur}px)`;
@@ -148,11 +153,11 @@ function initScrollEffects() {
 }
 
 // ========================================
-// 数字计数器动画
+// 数字统计
 // ========================================
 function initCounters() {
     const counters = document.querySelectorAll('.stat-number');
-    const speed = 200; // 速度越小越快
+    const speed = 200; // 更新速度
     
     const observerOptions = {
         threshold: 0.5
@@ -190,7 +195,7 @@ function initCounters() {
 }
 
 // ========================================
-// 技能进度条动画
+// 技能条动画
 // ========================================
 function initSkillBars() {
     const skillBars = document.querySelectorAll('.skill-progress');
@@ -221,7 +226,7 @@ function initSkillBars() {
 }
 
 // ========================================
-// 项目轮播功能（无限循环）
+// 项目轮播组件
 // ========================================
 function initProjectsCarousel() {
     const carousel = document.getElementById('projectsCarousel');
@@ -246,23 +251,23 @@ function initProjectsCarousel() {
         totalProjects
     });
     
-    // 克隆首尾元素实现无缝循环
+    // 设置无限循环
     function setupInfiniteLoop() {
         carousel.innerHTML = '';
         
-        // 克隆最后3个卡片放到开头
+        // 添加克隆项到末尾
         for (let i = totalProjects - 3; i < totalProjects; i++) {
             const clone = originalCards[i].cloneNode(true);
             clone.classList.add('clone');
             carousel.appendChild(clone);
         }
         
-        // 添加原始卡片
+        // 添加原始项目
         originalCards.forEach(card => {
             carousel.appendChild(card);
         });
         
-        // 克隆前3个卡片放到末尾
+        // 添加克隆项到开头
         for (let i = 0; i < 3; i++) {
             const clone = originalCards[i].cloneNode(true);
             clone.classList.add('clone');
@@ -274,7 +279,7 @@ function initProjectsCarousel() {
         updateCarouselPosition(false);
     }
     
-    // 计算卡片宽度和间距
+    // 获取卡片宽度
     function getCardWidth() {
         const cards = carousel.querySelectorAll('.project-card');
         if (cards.length === 0) return 0;
@@ -284,7 +289,7 @@ function initProjectsCarousel() {
         return cardWidth + gap;
     }
     
-    // 创建指示器
+    // 创建分页指示器
     function createIndicators() {
         indicatorsContainer.innerHTML = '';
         
@@ -297,7 +302,7 @@ function initProjectsCarousel() {
         }
     }
     
-    // 更新指示器
+    // 更新分页指示器
     function updateIndicators() {
         const dots = indicatorsContainer.querySelectorAll('.indicator-dot');
         const realIndex = (currentIndex - 3 + totalProjects) % totalProjects;
@@ -326,7 +331,7 @@ function initProjectsCarousel() {
         updateCarouselPosition();
     }
     
-    // 上一个
+    // 上一页幻灯片
     function prevSlide() {
         if (isTransitioning) return;
         console.log('Prev slide');
@@ -344,7 +349,7 @@ function initProjectsCarousel() {
         }, 500);
     }
     
-    // 下一个
+    // 下一页幻灯片
     function nextSlide() {
         if (isTransitioning) return;
         console.log('Next slide');
@@ -362,7 +367,7 @@ function initProjectsCarousel() {
         }, 500);
     }
     
-    // 绑定按钮事件
+    // 事件监听器
     prevBtn.addEventListener('click', () => {
         console.log('Prev button clicked!');
         prevSlide();
@@ -379,7 +384,7 @@ function initProjectsCarousel() {
         if (e.key === 'ArrowRight') nextSlide();
     });
     
-    // 触摸滑动支持
+    // 触摸滑动
     let touchStartX = 0;
     let touchEndX = 0;
     
@@ -397,7 +402,7 @@ function initProjectsCarousel() {
         }
     });
     
-    // 响应窗口大小变化
+    // 窗口大小调整
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -410,14 +415,14 @@ function initProjectsCarousel() {
     setupInfiniteLoop();
     createIndicators();
     
-    // 延迟一帧确保DOM更新完成
+    // 请求动画帧更新
     requestAnimationFrame(() => {
         updateCarouselPosition(false);
     });
 }
 
 // ========================================
-// 视差效果
+// 鼠标移动视差效果
 // ========================================
 function initParallax() {
     document.addEventListener('mousemove', (e) => {
@@ -437,7 +442,7 @@ function initParallax() {
 }
 
 // ========================================
-// 平滑滚动
+// 平滑滚动到锚点
 // ========================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -453,7 +458,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ========================================
-// 性能优化 - 节流函数
+// 函数节流 - 限制函数调用频率
 // ========================================
 function throttle(func, limit) {
     let inThrottle;
@@ -469,13 +474,13 @@ function throttle(func, limit) {
 }
 
 // ========================================
-// 加载动画
+// 页面加载事件
 // ========================================
 window.addEventListener('load', () => {
-    // 页面加载完成后的操作
+    // 页面加载完成后添加样式
     document.body.classList.add('loaded');
     
-    // 添加入场动画
+    // 英雄部分淡入效果
     const hero = document.querySelector('.hero-section');
     if (hero) {
         hero.style.opacity = '0';
@@ -489,6 +494,7 @@ window.addEventListener('load', () => {
 // ========================================
 // 控制台彩蛋
 // ========================================
-console.log('%c姚政权 - 三维扫描建模工程师', 'color: #00ffff; font-size: 20px; font-weight: bold;');
+console.log('%csuperyao - 三维扫描建模工程师', 'color: #00ffff; font-size: 20px; font-weight: bold;');
 console.log('%c期待与您的合作！', 'color: #00ff88; font-size: 14px;');
-console.log('%c联系电话: 17542134505', 'color: #00ffff; font-size: 14px;');
+console.log('%c联系方式请查看页面', 'color: #00ffff; font-size: 14px;');
+

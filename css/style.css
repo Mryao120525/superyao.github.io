@@ -898,6 +898,7 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+    flex-wrap: wrap;
 }
 
 .company-icon {
@@ -941,6 +942,7 @@ body {
 .job-responsibilities i {
     color: var(--primary-color);
     margin-top: 5px;
+    flex-shrink: 0;
 }
 
 .job-tags {
@@ -961,556 +963,7 @@ body {
 }
 
 /* ========================================
-   项目展示
-   ======================================== */
-
-/* ========================================
-   项目展示轮播
-   ======================================== */
-.projects-carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 40px;
-}
-
-.carousel-nav-btn {
-    flex-shrink: 0;
-    width: 60px;
-    height: 60px;
-    background: rgba(0, 255, 255, 0.1);
-    border: 2px solid var(--primary-color);
-    border-radius: 50%;
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition-smooth);
-    z-index: 10;
-}
-
-.carousel-nav-btn:hover {
-    background: var(--primary-color);
-    color: var(--bg-darker);
-    transform: scale(1.1);
-    box-shadow: 0 0 30px var(--glow-color);
-}
-
-.carousel-nav-btn:active {
-    transform: scale(0.95);
-}
-
-.projects-carousel-wrapper {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-    padding: 25px 20px;
-}
-
-.projects-carousel {
-    display: flex;
-    gap: 30px;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 项目卡片基础样式 */
-.project-card {
-    min-width: calc(33.333% - 20px);
-    max-width: calc(33.333% - 20px);
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-}
-
-.project-card:hover {
-    transform: translateY(-10px); /* 恢复较大的提升效果 */
-}
-
-.project-image {
-    width: 100%;
-    height: 250px;
-    background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(0, 255, 136, 0.2));
-    position: relative;
-    overflow: hidden;
-    border-radius: 20px 20px 0 0;
-}
-
-.project-overlay {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.5);
-    transition: var(--transition-smooth);
-}
-
-.project-card:hover .project-overlay {
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.project-overlay i {
-    font-size: 4rem;
-    color: var(--primary-color);
-    opacity: 0.6;
-    transition: var(--transition-smooth);
-}
-
-.project-card:hover .project-overlay i {
-    transform: scale(1.2) rotate(10deg);
-    opacity: 1;
-}
-
-.project-content {
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.project-content h3 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: var(--text-primary);
-}
-
-.project-content p {
-    color: var(--text-secondary);
-    line-height: 1.8;
-    margin-bottom: 20px;
-    flex: 1;
-}
-
-.project-tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: auto;
-}
-
-.tech-tag {
-    padding: 5px 12px;
-    background: rgba(0, 255, 136, 0.1);
-    border: 1px solid var(--secondary-color);
-    border-radius: 15px;
-    font-size: 0.8rem;
-    color: var(--secondary-color);
-}
-
-/* 轮播指示器 */
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 30px;
-}
-
-.indicator-dot {
-    width: 10px;
-    height: 10px;
-    background: rgba(0, 255, 255, 0.3);
-    border: 1px solid var(--primary-color);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-}
-
-.indicator-dot:hover {
-    background: rgba(0, 255, 255, 0.6);
-    transform: scale(1.2);
-}
-
-.indicator-dot.active {
-    background: var(--primary-color);
-    box-shadow: 0 0 15px var(--glow-color);
-    width: 12px;
-    height: 12px;
-}
-
-/* 响应式轮播 */
-@media (max-width: 1024px) {
-    .project-card {
-        min-width: calc(50% - 15px);
-        max-width: calc(50% - 15px);
-    }
-    
-    .carousel-nav-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .projects-carousel-container {
-        gap: 15px;
-    }
-    
-    .project-card {
-        min-width: 100%;
-        max-width: 100%;
-    }
-    
-    .carousel-nav-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-}
-
-/* ========================================
-   个人探索
-   ======================================== */
-.exploration-intro {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 50px;
-}
-
-.exploration-description {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    line-height: 1.8;
-}
-
-.exploration-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
-    margin-bottom: 50px;
-}
-
-.exploration-card {
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: var(--transition-smooth);
-}
-
-.exploration-card:hover {
-    transform: translateY(-10px);
-}
-
-.exploration-header {
-    padding: 30px 30px 20px;
-    background: rgba(0, 255, 255, 0.05);
-    border-bottom: 1px solid var(--glass-border);
-    position: relative;
-}
-
-.exploration-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.exploration-icon i {
-    font-size: 1.8rem;
-    color: var(--bg-darker);
-}
-
-.exploration-header h3 {
-    font-size: 1.4rem;
-    color: var(--text-primary);
-    margin-bottom: 0;
-}
-
-.github-link {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 255, 255, 0.1);
-    border: 1px solid var(--primary-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: var(--transition-smooth);
-}
-
-.github-link:hover {
-    background: var(--primary-color);
-    color: var(--bg-darker);
-    transform: rotate(360deg);
-    box-shadow: 0 0 20px var(--glow-color);
-}
-
-.exploration-body {
-    padding: 30px;
-    flex: 1;
-}
-
-.exploration-body p {
-    color: var(--text-secondary);
-    line-height: 1.8;
-    margin-bottom: 20px;
-}
-
-.exploration-features {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--text-primary);
-}
-
-.feature-item i {
-    color: var(--secondary-color);
-    font-size: 0.9rem;
-}
-
-.exploration-footer {
-    padding: 20px 30px 30px;
-}
-
-.explore-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 30px;
-    background: rgba(0, 255, 255, 0.1);
-    border: 1px solid var(--primary-color);
-    border-radius: 25px;
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: var(--transition-smooth);
-}
-
-.explore-btn:hover {
-    background: var(--primary-color);
-    color: var(--bg-darker);
-    box-shadow: 0 0 20px var(--glow-color);
-    transform: translateX(5px);
-}
-
-.explore-btn i {
-    transition: var(--transition-smooth);
-}
-
-.explore-btn:hover i {
-    transform: translateX(3px);
-}
-
-/* GitHub 个人主页卡片 */
-.github-profile {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.github-card {
-    padding: 50px;
-    text-align: center;
-}
-
-.github-icon {
-    font-size: 4rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    animation: pulse-icon 2s infinite;
-}
-
-@keyframes pulse-icon {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.1);
-        opacity: 0.8;
-    }
-}
-
-.github-card h3 {
-    font-size: 1.8rem;
-    color: var(--text-primary);
-    margin-bottom: 15px;
-}
-
-.github-card p {
-    color: var(--text-secondary);
-    line-height: 1.8;
-    margin-bottom: 30px;
-}
-
-.github-profile-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 15px 40px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: var(--bg-darker);
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: var(--transition-smooth);
-    box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
-}
-
-.github-profile-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 30px rgba(0, 255, 255, 0.5);
-}
-
-/* ========================================
-   联系方式
-   ======================================== */
-.contact-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.contact-card {
-    padding: 50px;
-}
-
-.contact-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.contact-header i {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 15px;
-}
-
-.contact-header h3 {
-    font-size: 1.8rem;
-    color: var(--text-primary);
-}
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-bottom: 40px;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    background: rgba(0, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    border-radius: 15px;
-    transition: var(--transition-smooth);
-}
-
-.contact-item:hover {
-    background: rgba(0, 255, 255, 0.1);
-    border-color: var(--primary-color);
-    transform: translateY(-5px);
-}
-
-.contact-icon {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 255, 255, 0.1);
-    border-radius: 50%;
-}
-
-.contact-icon i {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-}
-
-.contact-info h4 {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    margin-bottom: 5px;
-}
-
-.contact-info a,
-.contact-info p {
-    color: var(--text-primary);
-    text-decoration: none;
-    font-size: 1.1rem;
-}
-
-.contact-info a:hover {
-    color: var(--primary-color);
-}
-
-.salary-highlight {
-    color: var(--primary-color);
-    font-weight: bold;
-    font-size: 1.3rem !important;
-}
-
-.contact-cta {
-    text-align: center;
-    padding-top: 30px;
-    border-top: 1px solid var(--glass-border);
-}
-
-.contact-cta p {
-    color: var(--text-secondary);
-    margin-bottom: 20px;
-}
-
-.btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 40px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: var(--bg-darker);
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: var(--transition-smooth);
-    box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 30px rgba(0, 255, 255, 0.5);
-}
-
-/* ========================================
-   页脚
-   ======================================== */
-.footer {
-    background: rgba(10, 14, 39, 0.5);
-    padding: 40px 0;
-    border-top: 1px solid var(--glass-border);
-    text-align: center;
-}
-
-.footer-content p {
-    color: var(--text-secondary);
-    margin-bottom: 10px;
-}
-
-/* ========================================
-   响应式设计
+   响应式设计 - 移动端优化
    ======================================== */
 @media (max-width: 1024px) {
     .about-content {
@@ -1521,30 +974,47 @@ body {
         grid-template-columns: 1fr;
     }
     
+    .exploration-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* 时间轴改为左对齐 */
     .timeline::before {
-        left: 30px;
+        left: 20px;
+        transform: none;
     }
     
     .timeline-item,
     .timeline-item:nth-child(odd) {
         flex-direction: row;
-    }
-    
-    .timeline-item:nth-child(odd) .timeline-content {
-        text-align: left;
-    }
-    
-    .timeline-marker {
-        left: 30px;
+        justify-content: flex-start;
     }
     
     .timeline-content {
-        width: calc(100% - 100px);
-        margin-left: 80px;
+        width: 100%;
+        max-width: 100%;
+        padding: 25px;
+        padding-left: 60px;
+        margin: 0;
+    }
+    
+    /* 时间线点标记 */
+    .timeline-item::after {
+        content: '';
+        position: absolute;
+        left: 14px;
+        top: 25px;
+        width: 14px;
+        height: 14px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        box-shadow: 0 0 15px var(--glow-color);
+        z-index: 1;
     }
 }
 
 @media (max-width: 768px) {
+    /* 导航栏 */
     .nav-links {
         position: fixed;
         top: 70px;
@@ -1556,6 +1026,7 @@ body {
         flex-direction: column;
         padding: 50px 0;
         transition: left 0.4s ease;
+        z-index: 999;
     }
     
     .nav-links.active {
@@ -1578,6 +1049,7 @@ body {
         transform: rotate(-45deg) translate(8px, -8px);
     }
     
+    /* 主页 */
     .hero-title {
         font-size: 2.5rem;
     }
@@ -1586,39 +1058,131 @@ body {
         font-size: 1.3rem;
     }
     
+    .hero-tagline {
+        font-size: 1rem;
+    }
+    
     .hero-stats {
         flex-direction: column;
         gap: 20px;
     }
     
+    .terminal-body {
+        padding: 30px 20px;
+    }
+    
+    /* 区块标题 */
     .section-title {
         font-size: 2rem;
     }
     
+    .section {
+        padding: 60px 0;
+    }
+    
+    /* 关于我 */
     .info-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
     
-    .projects-grid {
-        grid-template-columns: 1fr;
+    .about-card {
+        padding: 25px;
     }
     
+    /* 技能 */
+    .skill-category {
+        padding: 25px;
+    }
+    
+    .equipment-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+    }
+    
+    .equipment-item {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+    
+    /* 时间轴 */
+    .timeline::before {
+        left: 15px;
+    }
+    
+    .timeline-item::after {
+        left: 9px;
+        width: 14px;
+        height: 14px;
+    }
+    
+    .timeline-content {
+        padding: 20px;
+        padding-left: 45px;
+    }
+    
+    .timeline-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .timeline-date {
+        font-size: 0.85rem;
+    }
+    
+    .job-responsibilities {
+        font-size: 0.95rem;
+    }
+    
+    .job-responsibilities li {
+        margin-bottom: 8px;
+    }
+    
+    /* 个人探索 */
+    .exploration-card {
+        margin-bottom: 20px;
+    }
+    
+    .exploration-header {
+        padding: 25px 25px 15px;
+    }
+    
+    .exploration-body {
+        padding: 25px;
+    }
+    
+    .exploration-footer {
+        padding: 15px 25px 25px;
+    }
+    
+    .github-card {
+        padding: 35px 25px;
+    }
+    
+    /* 联系方式 */
     .contact-card {
         padding: 30px 20px;
     }
     
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    /* 3D模型 */
     #model-viewer {
         height: 350px;
     }
 }
 
 @media (max-width: 480px) {
+    /* 容器 */
     .container {
-        padding: 0 20px;
+        padding: 0 15px;
     }
     
+    /* 主页 */
     .terminal-body {
-        padding: 25px;
+        padding: 20px 15px;
     }
     
     .hero-title {
@@ -1629,28 +1193,177 @@ body {
         font-size: 1.1rem;
     }
     
+    .hero-tagline {
+        font-size: 0.9rem;
+    }
+    
+    .hero-experience {
+        font-size: 1rem;
+    }
+    
     .stat-number {
         font-size: 2rem;
     }
     
+    /* 区块 */
+    .section {
+        padding: 50px 0;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 40px;
+    }
+    
+    /* 卡片 */
+    .about-card,
+    .skill-category {
+        padding: 20px;
+    }
+    
+    .card-header,
+    .category-header {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+    
+    /* 设备网格 */
     .equipment-grid {
         grid-template-columns: 1fr;
     }
     
-    .contact-grid {
-        grid-template-columns: 1fr;
+    .equipment-item {
+        justify-content: flex-start;
+    }
+    
+    /* 时间轴 */
+    .timeline-content {
+        padding: 15px;
+        padding-left: 40px;
+    }
+    
+    .timeline-header h3 {
+        font-size: 1.1rem;
+        gap: 10px;
+    }
+    
+    .company-icon {
+        font-size: 1.2rem;
+    }
+    
+    .timeline-date {
+        font-size: 0.8rem;
+    }
+    
+    .job-description,
+    .job-responsibilities {
+        font-size: 0.9rem;
+    }
+    
+    /* 项目轮播 */
+    .projects-carousel-wrapper {
+        padding: 15px 10px;
+    }
+    
+    .project-card {
+        min-width: 100%;
+    }
+    
+    .project-image {
+        height: 200px;
+    }
+    
+    .project-content {
+        padding: 20px;
+    }
+    
+    .project-content h3 {
+        font-size: 1.2rem;
+    }
+    
+    /* 个人探索 */
+    .exploration-header,
+    .exploration-body,
+    .exploration-footer {
+        padding: 20px;
+    }
+    
+    .exploration-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .exploration-icon i {
+        font-size: 1.5rem;
+    }
+    
+    .github-link {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    /* 联系方式 */
+    .contact-card {
+        padding: 25px 15px;
+    }
+    
+    .contact-header i {
+        font-size: 2.5rem;
+    }
+    
+    .contact-item {
+        padding: 15px;
+    }
+    
+    .contact-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .contact-icon i {
+        font-size: 1.3rem;
+    }
+    
+    .btn-primary {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+    
+    /* Logo */
+    .logo {
+        font-size: 1.3rem;
     }
 }
 
-/* ========================================
-   动画性能优化
-   ======================================== */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+/* 超小屏幕 */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 12px;
+    }
+    
+    .hero-title {
+        font-size: 1.7rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+    
+    .timeline-content {
+        padding: 12px;
+        padding-left: 35px;
+    }
+    
+    .timeline-header h3 {
+        font-size: 1rem;
+    }
+    
+    .project-image {
+        height: 180px;
     }
 }
