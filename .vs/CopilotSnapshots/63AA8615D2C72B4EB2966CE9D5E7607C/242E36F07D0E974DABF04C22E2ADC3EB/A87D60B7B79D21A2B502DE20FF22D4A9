@@ -1,4 +1,4 @@
-/* ========================================
+﻿/* ========================================
    液态玻璃高科技简历网站样式
    ======================================== */
 
@@ -1806,10 +1806,6 @@ body {
         padding: 0 10px;
     }
     
-    .projects-carousel-wrapper {
-        padding: 15px 0;
-    }
-    
     .project-card {
         flex: 0 0 100%;
         min-width: 100%;
@@ -1821,24 +1817,6 @@ body {
     
     .project-overlay i {
         font-size: 2.5rem;
-    }
-    
-    .project-content {
-        padding: 20px;
-    }
-    
-    .project-content h3 {
-        font-size: 1.2rem;
-    }
-    
-    .carousel-indicators {
-        margin-top: 20px;
-        gap: 8px;
-    }
-    
-    .indicator-dot {
-        width: 10px;
-        height: 10px;
     }
     
     /* 个人探索 */
@@ -1892,5 +1870,37 @@ body {
     /* Logo */
     .logo {
         font-size: 1.3rem;
+    }
+}
+
+/* 超小屏幕 */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 12px;
+    }
+    
+    .hero-title {
+        font-size: 1.7rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+    
+    .timeline-content {
+        padding: 12px;
+        padding-left: 35px;
+    }
+    
+    .timeline-header h3 {
+        font-size: 1rem;
+    }
+    
+    .project-image {
+        height: 180px;
     }
 }
