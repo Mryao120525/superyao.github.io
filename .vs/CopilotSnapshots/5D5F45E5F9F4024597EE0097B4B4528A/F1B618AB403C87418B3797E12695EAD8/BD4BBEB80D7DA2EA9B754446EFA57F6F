@@ -1,4 +1,4 @@
-/* ========================================
+﻿/* ========================================
    液态玻璃高科技简历网站样式
    ======================================== */
 
@@ -1527,11 +1527,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    /* 隐藏扫描线效果 */
-    .scanline {
-        display: none;
-    }
-    
     /* 导航栏 */
     .nav-links {
         position: fixed;
@@ -1655,38 +1650,6 @@ body {
         margin-bottom: 8px;
     }
     
-    /* 项目轮播 */
-    .projects-carousel-container {
-        padding: 0 15px;
-    }
-    
-    .carousel-nav-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-    
-    .prev-btn {
-        left: -5px;
-    }
-    
-    .next-btn {
-        right: -5px;
-    }
-    
-    .project-card {
-        flex: 0 0 calc(100% - 40px);
-        min-width: calc(100% - 40px);
-    }
-    
-    .project-image {
-        height: 220px;
-    }
-    
-    .project-overlay i {
-        font-size: 3rem;
-    }
-    
     /* 个人探索 */
     .exploration-card {
         margin-bottom: 20px;
@@ -1725,11 +1688,6 @@ body {
 }
 
 @media (max-width: 480px) {
-    /* 隐藏扫描线效果 */
-    .scanline {
-        display: none;
-    }
-    
     /* 容器 */
     .container {
         padding: 0 15px;
@@ -1816,25 +1774,16 @@ body {
     }
     
     /* 项目轮播 */
-    .projects-carousel-container {
-        padding: 0 10px;
-    }
-    
     .projects-carousel-wrapper {
-        padding: 15px 0;
+        padding: 15px 10px;
     }
     
     .project-card {
-        flex: 0 0 100%;
         min-width: 100%;
     }
     
     .project-image {
         height: 200px;
-    }
-    
-    .project-overlay i {
-        font-size: 2.5rem;
     }
     
     .project-content {
@@ -1845,54 +1794,31 @@ body {
         font-size: 1.2rem;
     }
     
-    .carousel-nav-btn {
+    /* 个人探索 */
+    .exploration-header,
+    .exploration-body,
+    .exploration-footer {
+        padding: 20px;
+    }
+    
+    .exploration-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .exploration-icon i {
+        font-size: 1.5rem;
+    }
+    
+    .github-link {
         width: 35px;
         height: 35px;
         font-size: 0.9rem;
     }
     
-    .prev-btn {
-        left: 5px;
-    }
-    
-    .next-btn {
-        right: 5px;
-    }
-    
-    .carousel-indicators {
-        margin-top: 20px;
-        gap: 8px;
-    }
-    
-    .indicator-dot {
-        width: 10px;
-        height: 10px;
-    }
-    
-    /* 个人探索 */
-    .exploration-card {
-        margin-bottom: 20px;
-    }
-    
-    .exploration-header {
-        padding: 25px 25px 15px;
-    }
-    
-    .exploration-body {
-        padding: 25px;
-    }
-    
-    .exploration-footer {
-        padding: 15px 25px 25px;
-    }
-    
-    .github-card {
-        padding: 35px 25px;
-    }
-    
     /* 联系方式 */
     .contact-card {
-        padding: 30px 20px;
+        padding: 25px 15px;
     }
     
     .contact-header i {
