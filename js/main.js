@@ -1,0 +1,494 @@
+// ========================================
+// 主JavaScript文件 - 液态玻璃简历网站
+// ========================================
+
+// 全局变量
+// Three.js相关变量已删除
+
+// ========================================
+// 初始化
+// ========================================
+document.addEventListener('DOMContentLoaded', function() {
+    // 初始化AOS动画
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
+    
+    // 初始化所有功能（移除Three.js相关）
+    initNavigation();
+    initScrollEffects();
+    initCounters();
+    initSkillBars();
+    initProjectsCarousel();
+    init3DCardEffect(); // 添加3D卡片效果
+});
+
+// ========================================
+// 3D卡片倾斜效果
+// ========================================
+function init3DCardEffect() {
+    const cards = document.querySelectorAll('.liquid-glass');
+    
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transition = 'transform 0.1s ease-out';
+        });
+        
+        card.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = ((y - centerY) / centerY) * 10; // 垂直旋转，幅度±10度
+            const rotateY = ((x - centerX) / centerX) * -10; // 水平旋转，幅度±10度
+            
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transition = 'transform 0.5s ease-out';
+            this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+    });
+}
+
+// ========================================
+// 导航栏功能
+// ========================================
+function initNavigation() {
+    const navbar = document.getElementById('navbar');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const navLinkItems = document.querySelectorAll('.nav-link');
+    
+    // 滚动时改变导航栏样式
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+    
+    // 移动端菜单切换
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+    
+    // 点击导航链接
+    navLinkItems.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // 移除所有active类
+            navLinkItems.forEach(l => l.classList.remove('active'));
+            
+            // 添加active类到当前链接
+            this.classList.add('active');
+            
+            // 平滑滚动到目标
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+            
+            // 关闭移动端菜单
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    });
+    
+    // 滚动时更新导航高亮
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const sections = document.querySelectorAll('.section, .hero-section');
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (window.scrollY >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinkItems.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+
+// ========================================
+// 滚动特效
+// ========================================
+function initScrollEffects() {
+    // 监听滚动，添加视差效果
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        
+        // 导航栏模糊效果
+        const navbar = document.getElementById('navbar');
+        const blur = Math.min(scrolled / 10, 20);
+        navbar.style.backdropFilter = `blur(${blur}px)`;
+    });
+}
+
+// ========================================
+// 数字计数器动画
+// ========================================
+function initCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 200; // 速度越小越快
+    
+    const observerOptions = {
+        threshold: 0.5
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = +counter.getAttribute('data-target');
+                const label = counter.nextElementSibling.textContent;
+                const hasPlus = label.includes('+');
+                
+                const updateCount = () => {
+                    const count = +counter.innerText;
+                    const increment = target / speed;
+                    
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(updateCount, 10);
+                    } else {
+                        counter.innerText = target + (hasPlus ? '+' : '');
+                    }
+                };
+                
+                updateCount();
+                observer.unobserve(counter);
+            }
+        });
+    }, observerOptions);
+    
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+}
+
+// ========================================
+// 技能进度条动画
+// ========================================
+function initSkillBars() {
+    const skillBars = document.querySelectorAll('.skill-progress');
+    const proficiencyBars = document.querySelectorAll('.proficiency-bar');
+    
+    const observerOptions = {
+        threshold: 0.5
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const progress = bar.getAttribute('data-progress') || bar.getAttribute('data-proficiency');
+                
+                setTimeout(() => {
+                    bar.style.width = progress + '%';
+                    bar.classList.add('animated');
+                }, 200);
+                
+                observer.unobserve(bar);
+            }
+        });
+    }, observerOptions);
+    
+    skillBars.forEach(bar => observer.observe(bar));
+    proficiencyBars.forEach(bar => observer.observe(bar));
+}
+
+// ========================================
+// 项目轮播功能（无限循环）
+// ========================================
+function initProjectsCarousel() {
+    const carousel = document.getElementById('projectsCarousel');
+    const prevBtn = document.getElementById('prevProject');
+    const nextBtn = document.getElementById('nextProject');
+    const indicatorsContainer = document.getElementById('projectIndicators');
+    
+    if (!carousel || !prevBtn || !nextBtn) {
+        console.error('Carousel elements not found!');
+        return;
+    }
+    
+    const originalCards = Array.from(carousel.querySelectorAll('.project-card'));
+    const totalProjects = originalCards.length;
+    let currentIndex = 0;
+    let isTransitioning = false;
+    
+    console.log('Carousel initialized:', {
+        carousel: !!carousel,
+        prevBtn: !!prevBtn,
+        nextBtn: !!nextBtn,
+        totalProjects
+    });
+    
+    // 克隆首尾元素实现无缝循环
+    function setupInfiniteLoop() {
+        carousel.innerHTML = '';
+        
+        // 克隆最后3个卡片放到开头
+        for (let i = totalProjects - 3; i < totalProjects; i++) {
+            const clone = originalCards[i].cloneNode(true);
+            clone.classList.add('clone');
+            carousel.appendChild(clone);
+        }
+        
+        // 添加原始卡片
+        originalCards.forEach(card => {
+            carousel.appendChild(card);
+        });
+        
+        // 克隆前3个卡片放到末尾
+        for (let i = 0; i < 3; i++) {
+            const clone = originalCards[i].cloneNode(true);
+            clone.classList.add('clone');
+            carousel.appendChild(clone);
+        }
+        
+        currentIndex = 3;
+        carousel.style.transition = 'none';
+        updateCarouselPosition(false);
+    }
+    
+    // 计算卡片宽度和间距
+    function getCardWidth() {
+        const cards = carousel.querySelectorAll('.project-card');
+        if (cards.length === 0) return 0;
+        const firstCard = cards[0];
+        const cardWidth = firstCard.offsetWidth;
+        const gap = 30;
+        return cardWidth + gap;
+    }
+    
+    // 创建指示器
+    function createIndicators() {
+        indicatorsContainer.innerHTML = '';
+        
+        for (let i = 0; i < totalProjects; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('indicator-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            indicatorsContainer.appendChild(dot);
+        }
+    }
+    
+    // 更新指示器
+    function updateIndicators() {
+        const dots = indicatorsContainer.querySelectorAll('.indicator-dot');
+        const realIndex = (currentIndex - 3 + totalProjects) % totalProjects;
+        
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === realIndex);
+        });
+    }
+    
+    // 更新轮播位置
+    function updateCarouselPosition(animate = true) {
+        const cardWidth = getCardWidth();
+        const offset = -currentIndex * cardWidth;
+        
+        carousel.style.transition = animate ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+        carousel.style.transform = `translateX(${offset}px)`;
+        updateIndicators();
+        
+        console.log('Position updated:', { currentIndex, realIndex: currentIndex - 3, offset });
+    }
+    
+    // 跳转到指定幻灯片
+    function goToSlide(index) {
+        if (isTransitioning) return;
+        currentIndex = index + 3;
+        updateCarouselPosition();
+    }
+    
+    // 上一个
+    function prevSlide() {
+        if (isTransitioning) return;
+        console.log('Prev slide');
+        isTransitioning = true;
+        
+        currentIndex--;
+        updateCarouselPosition();
+        
+        setTimeout(() => {
+            if (currentIndex < 3) {
+                currentIndex = totalProjects + 2;
+                updateCarouselPosition(false);
+            }
+            isTransitioning = false;
+        }, 500);
+    }
+    
+    // 下一个
+    function nextSlide() {
+        if (isTransitioning) return;
+        console.log('Next slide');
+        isTransitioning = true;
+        
+        currentIndex++;
+        updateCarouselPosition();
+        
+        setTimeout(() => {
+            if (currentIndex >= totalProjects + 3) {
+                currentIndex = 3;
+                updateCarouselPosition(false);
+            }
+            isTransitioning = false;
+        }, 500);
+    }
+    
+    // 绑定按钮事件
+    prevBtn.addEventListener('click', () => {
+        console.log('Prev button clicked!');
+        prevSlide();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        console.log('Next button clicked!');
+        nextSlide();
+    });
+    
+    // 键盘导航
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+    });
+    
+    // 触摸滑动支持
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+        }
+    });
+    
+    // 响应窗口大小变化
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            updateCarouselPosition(false);
+        }, 250);
+    });
+    
+    // 初始化
+    setupInfiniteLoop();
+    createIndicators();
+    
+    // 延迟一帧确保DOM更新完成
+    requestAnimationFrame(() => {
+        updateCarouselPosition(false);
+    });
+}
+
+// ========================================
+// 视差效果
+// ========================================
+function initParallax() {
+    document.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX / window.innerWidth - 0.5;
+        const mouseY = e.clientY / window.innerHeight - 0.5;
+        
+        // 移动液态玻璃元素
+        const glassElements = document.querySelectorAll('.liquid-glass');
+        glassElements.forEach(element => {
+            const speed = element.dataset.speed || 5;
+            const x = mouseX * speed;
+            const y = mouseY * speed;
+            
+            element.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    });
+}
+
+// ========================================
+// 平滑滚动
+// ========================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// ========================================
+// 性能优化 - 节流函数
+// ========================================
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// ========================================
+// 加载动画
+// ========================================
+window.addEventListener('load', () => {
+    // 页面加载完成后的操作
+    document.body.classList.add('loaded');
+    
+    // 添加入场动画
+    const hero = document.querySelector('.hero-section');
+    if (hero) {
+        hero.style.opacity = '0';
+        setTimeout(() => {
+            hero.style.transition = 'opacity 1s ease';
+            hero.style.opacity = '1';
+        }, 100);
+    }
+});
+
+// ========================================
+// 控制台彩蛋
+// ========================================
+console.log('%c姚政权 - 三维扫描建模工程师', 'color: #00ffff; font-size: 20px; font-weight: bold;');
+console.log('%c期待与您的合作！', 'color: #00ff88; font-size: 14px;');
+console.log('%c联系电话: 17542134505', 'color: #00ffff; font-size: 14px;');
